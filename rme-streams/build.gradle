@@ -1,0 +1,23 @@
+apply plugin: 'rme.java-application-conventions'
+apply plugin:'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+	mainClassName = 'ca.qc.banq.rme.streams.Application'
+    archiveBaseName = 'rme-streams'
+    archiveVersion =  ''
+}
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+configurations.all {
+	exclude group:'com.azure.spring', module: 'spring-cloud-azure-starter-active-directory'
+
+}
+dependencies {
+}

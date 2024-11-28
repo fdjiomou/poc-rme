@@ -1,0 +1,124 @@
+buildscript {
+    ext {
+        springBootVersion = '3.3.5'
+		springCloudAzureVersion = '5.0.0'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+	      url "https://plugins.gradle.org/m2/"
+	    }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	
+	sourceCompatibility = 17
+	targetCompatibility = 17
+	
+	dependencies {
+	
+		//implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+		implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		//implementation 'com.azure.spring:spring-cloud-azure-starter-active-directory'
+		//implementation 'com.azure.spring:spring-cloud-azure-starter-active-directory-b2c'
+		//implementation 'org.springframework.security:spring-security-oauth2-core'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.springframework.boot:spring-boot-starter-actuator'
+		
+		//implementation 'org.springframework.cloud:spring-cloud-starter-config'
+		//implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+		
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	    implementation 'org.apache.kafka:kafka-streams'
+	    implementation 'org.springframework.kafka:spring-kafka'
+		
+		//implementation 'org.xbib:marc:2.14.1'
+		implementation 'org.marc4j:marc4j:2.9.6'
+		implementation 'commons-io:commons-io:2.17.0'
+		implementation 'org.apache.commons:commons-lang3'
+		
+	    runtimeOnly 'com.h2database:h2'
+	    runtimeOnly 'com.mysql:mysql-connector-j'
+	    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	    testImplementation 'org.springframework.kafka:spring-kafka-test'
+	    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+			
+			
+		testImplementation 'org.springframework.security:spring-security-test'
+		
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	}
+	
+	dependencyManagement {
+		imports {
+			//mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
+		}
+	}
+
+	tasks.named('test') {
+		useJUnitPlatform()
+	}
+	
+}
+
+subprojects {
+
+	project(':rme-cloud-config') {
+		jar {
+			enabled = false
+		}
+
+	}
+	
+	project(':rme-gateway') {
+		jar {
+			enabled = false
+		}
+	}
+	
+	project(':rme-web') {
+		jar {
+			enabled = false
+		}
+	}
+	
+	project(':rme-backend') {
+		jar {
+			enabled = false
+		}
+	}
+	
+	project(':rme-shared') {}
+	
+	project(':rme-streams') {
+		jar {
+			enabled = false
+		}
+	}
+
+	project(':rme-logging') {
+		jar {
+			enabled = false
+		}
+	}
+	
+}

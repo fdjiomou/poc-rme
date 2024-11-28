@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+  port: 8888
+spring:
+  application:
+    name: rme-config-server
+  security:
+    basic:
+      enabled: true
+    user:
+      name: rmeconfiguser
+      password: RMEconfigPass1234
+  cloud:
+    config:
+      server:
+        encrypt:
+          enabled: false
+        git:
+          uri: https://github.com/fdjiomou/apps-config.git
+          default-label: master
+          search-paths: 'rme'
+          clone-on-start: true
+          ignoreLocalSshSettings: true
+          force-pull: true # pull the latest code from GIT in case the local repo has some issues and couldn't able to update the repo
+          skipSslValidation: true # Git Server SSL validation can be disabled
+          timeout: 10 #HTTP connection timeout (in seconds)
+          username: fdjiomou
+          password: B@nq12345
+#encrypt:
+#  key: <your security key go over here>

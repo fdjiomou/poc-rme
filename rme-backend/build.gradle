@@ -1,0 +1,39 @@
+apply plugin: 'rme.java-application-conventions'
+apply plugin:'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+bootJar {
+	mainClassName = 'ca.qc.banq.rme.backend.Application'
+    archiveBaseName = 'rme-backend'
+    archiveVersion =  ''
+}
+/*jar {
+    from project.sourceSets.main.allSource
+    from project(":rme-shared").sourceSets.main.java.srcDirs
+}*/
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            //srcDir project(':rme-shared').file('src/main/java')
+        }
+    }
+}
+configurations.all {
+	exclude group:'org.springframework.boot', module: 'spring-boot-starter-logging'
+}
+dependencies {
+	implementation 'org.apache.commons:commons-text'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
+	//implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	//implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+	implementation project(':rme-shared')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.3"
+	}
+}

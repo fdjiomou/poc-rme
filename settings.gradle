@@ -1,0 +1,2 @@
+rootProject.name = 'rme'
+include('rme-gateway', 'rme-cloud-config', 'rme-web', 'rme-backend', 'rme-shared', 'rme-streams', 'rme-logging')

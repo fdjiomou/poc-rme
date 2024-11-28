@@ -1,0 +1,4 @@
+plugins {
+    id 'rme.java-common-conventions' 
+    id 'application' 
+}
