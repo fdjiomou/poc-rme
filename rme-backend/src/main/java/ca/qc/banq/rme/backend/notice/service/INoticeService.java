@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ca.qc.banq.rme.backend.notice.valueobject.NoticeDisplayPayload;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticePayload;
-import ca.qc.banq.rme.shared.marcfactory.data.TagFieldTypeData;
+import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
 
 /**
  * 
@@ -71,13 +71,13 @@ public interface INoticeService {
 	 * Enregistrer des etiquettes personnalisees
 	 * @param payload
 	 */
-	public void saveCustomEtiquettes(List<TagFieldTypeData> payload) throws Exception;
+	public void saveCustomEtiquettes(List<CustomDataField> payload) throws Exception;
 	
 	/**
 	 * Lister les etiquettes personnalisees
 	 * @return
 	 */
-	public List<TagFieldTypeData> getCustomEtiquettes();
+	public List<CustomDataField> getCustomEtiquettes();
 	
 	/**
 	 * Supprimer une etiquette personnalisee

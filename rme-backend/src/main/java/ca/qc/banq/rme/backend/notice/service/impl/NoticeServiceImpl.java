@@ -4,10 +4,9 @@
 package ca.qc.banq.rme.backend.notice.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.marc4j.marc.Record;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,12 @@ import ca.qc.banq.rme.backend.notice.repository.INoticeRepository;
 import ca.qc.banq.rme.backend.notice.service.INoticeService;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticeDisplayPayload;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticePayload;
+import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
+import ca.qc.banq.rme.shared.marcfactory.data.CustomSubField;
 import ca.qc.banq.rme.shared.marcfactory.data.MarcRecordStringData;
-import ca.qc.banq.rme.shared.marcfactory.data.TagFieldTypeData;
-import ca.qc.banq.rme.shared.marcfactory.enums.DataFieldType;
 import ca.qc.banq.rme.shared.marcfactory.helpers.MarcServiceHelper;
 import ca.qc.banq.rme.shared.marcfactory.helpers.MarcServiceHelper.marc_string_representation_format;
-import ca.qc.banq.rme.shared.repository.ITagFieldTypeData;
+import ca.qc.banq.rme.shared.repository.ICustomDataFieldRepository;
 import ca.qc.banq.rme.shared.service.ResourceManagementService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -48,8 +47,9 @@ public class NoticeServiceImpl implements INoticeService {
 	@Autowired
 	ResourceManagementService translator;
 	
+	
 	@Autowired
-	ITagFieldTypeData fieldRepo;
+	ICustomDataFieldRepository cdfRepo;
 	
 	/*
 	 * @see ca.qc.banq.rme.backend.notice.service.INoticeService#enregistrer(ca.qc.banq.rme.shared.marcrecord.payload.MarcRecordPayload)
@@ -76,7 +76,7 @@ public class NoticeServiceImpl implements INoticeService {
 	@Override
 	public NoticePayload editer(Long idNotice) {
 		Notice n = noticeRepo.findById(idNotice).orElse(null);
-		return n != null ? n.toDTO(translator) : null;
+		return n != null ? n.toDTO(translator, cdfRepo.findAll()) : null;
 	}
 
 	/*
@@ -131,15 +131,27 @@ public class NoticeServiceImpl implements INoticeService {
 	
 	@PostConstruct
 	public void init() {
-		rafraichirCustomEtiquettes();
+		
+		// Sauvegarde des etiquettes personnalises
+		if(cdfRepo.count() == 0) {
+			for(CustomDataField cdf: DefaultValues.DEFAULT_CUSTOM_DATAFIELDS) {
+				List<CustomSubField> items = new ArrayList<CustomSubField>( cdf.getSubfields() );
+				cdf.setSubfields(null);
+				CustomDataField c = cdfRepo.save(cdf);
+				items.forEach(i -> i.setField(c));
+				c.setSubfields(new HashSet<CustomSubField>(items));
+				cdfRepo.save(c);
+			}
+			
+		}
 	}
 	
-	private void rafraichirCustomEtiquettes() {
+	/*private void rafraichirCustomEtiquettes() {
 		List<TagFieldTypeData> customs = fieldRepo.findAll();
 		Map<String, List<TagFieldTypeData>> tmp = customs.stream().collect(Collectors.toMap(TagFieldTypeData::getField, c -> new ArrayList<TagFieldTypeData>() ));
 		customs.forEach(c -> tmp.get(c.getField()).add(c) );
 		DataFieldType.customEtiquettes = tmp;
-	}
+	}*
 
 	/*
 	 * @see ca.qc.banq.rme.backend.notice.service.INoticeService#exporter(java.lang.Long)
@@ -154,26 +166,17 @@ public class NoticeServiceImpl implements INoticeService {
 	 * @see ca.qc.banq.rme.backend.notice.service.INoticeService#saveCustomEtiquettes(java.util.List)
 	 */
 	@Override
-	public void saveCustomEtiquettes(List<TagFieldTypeData> payload) throws Exception {
-		for(TagFieldTypeData e: payload) {
-			if(DataFieldType.getOf(e.getField()) != null) throw new Exception("L'etiquette $"+e.getField()+" existe deja");
-		}
-		List<TagFieldTypeData> toSave = new ArrayList<TagFieldTypeData>();
-		payload.forEach(e -> {
-			TagFieldTypeData n = fieldRepo.findById(e.getId()).orElse(null);
-			if(n == null) n = new TagFieldTypeData(); else n.update(e);
-			toSave.add(n);
-		});
-		fieldRepo.saveAll(toSave);
-		rafraichirCustomEtiquettes();
+	public void saveCustomEtiquettes(List<CustomDataField> request) throws Exception {
+		cdfRepo.deleteAllById(request.stream().map(d -> d.getCode()).toList());
+		cdfRepo.saveAll(request);
 	}
 
 	/*
 	 * @see ca.qc.banq.rme.backend.notice.service.INoticeService#getCustomEtiquettes()
 	 */
 	@Override
-	public List<TagFieldTypeData> getCustomEtiquettes() {
-		return fieldRepo.findAll();
+	public List<CustomDataField> getCustomEtiquettes() {
+		return cdfRepo.findAll();
 	}
 
 	/*
@@ -181,8 +184,7 @@ public class NoticeServiceImpl implements INoticeService {
 	 */
 	@Override
 	public void deleteCustomEtiquette(String id) {
-		fieldRepo.deleteById(id);
-		rafraichirCustomEtiquettes();
+		cdfRepo.deleteById(id);
 	}
 	
 	

@@ -3,27 +3,21 @@
  */
 package ca.qc.banq.rme.shared.marcfactory.helpers;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.apache.commons.io.Charsets;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.marc4j.MarcJsonWriter;
 import org.marc4j.MarcReader;
 import org.marc4j.MarcStreamReader;
 import org.marc4j.MarcStreamWriter;
 import org.marc4j.MarcTxtWriter;
-import org.marc4j.MarcWriter;
 import org.marc4j.MarcXmlReader;
 import org.marc4j.MarcXmlWriter;
 import org.marc4j.marc.ControlField;
@@ -31,7 +25,18 @@ import org.marc4j.marc.DataField;
 import org.marc4j.marc.Record;
 import org.marc4j.marc.Subfield;
 
+import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
 import ca.qc.banq.rme.shared.marcfactory.data.MarcRecordStringData;
+import ca.qc.banq.rme.shared.marcfactory.data.SubFieldDTO;
+import ca.qc.banq.rme.shared.marcfactory.enums.ControlFieldType;
+import ca.qc.banq.rme.shared.marcfactory.enums.DataFieldType;
+import ca.qc.banq.rme.shared.marcfactory.enums.TagField;
+import ca.qc.banq.rme.shared.marcrecord.payload.ControlFieldPayload;
+import ca.qc.banq.rme.shared.marcrecord.payload.DataFieldPayload;
+import ca.qc.banq.rme.shared.marcrecord.payload.LeaderPayload;
+import ca.qc.banq.rme.shared.marcrecord.payload.MarcRecordPayload;
+import ca.qc.banq.rme.shared.marcrecord.payload.TagFieldTypePayload;
+import ca.qc.banq.rme.shared.service.ResourceManagementService;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -123,4 +128,51 @@ public class MarcServiceHelper {
         return stringData;
 	}
 
+
+	public static MarcRecordPayload getFromRecord(Record rec, ResourceManagementService translator, List<CustomDataField> customFields) {
+		
+		// Initialisation de la liste des champs de controle (000..009)
+		List<ControlFieldPayload> fields = Arrays.asList(ControlFieldType.values()).stream().map(cft -> new ControlFieldPayload(cft, cft.getClasse(), cft.getDisplayCode(), translator.getMessage(cft.getDisplayLabel(), null) , cft.isRequired(), cft.isRepeatable(), cft.isFixedLength(), cft.getLength(), cft.isValueStructured(), "") ).toList();
+		rec.getControlFields().forEach(cf -> {
+			ControlFieldPayload cfp = fields.stream().filter(f -> f.getDisplayCode().equals(cf.getTag()) && f.getValue().isEmpty() ).findFirst().orElse(null);
+			if(cfp != null) {
+				cfp.setValue(cf.getData());
+			}
+		});
+		
+		// Initialisation du Leader (champ 000)
+		fields.stream().filter(f -> f.getFieldType().equals(ControlFieldType.$000)).findFirst().get().setValue(rec.getLeader().marshal());
+		
+		// Initialisation de la liste de toutes les etiquettes de la norme Marc21
+		List<DataFieldPayload> data = Arrays.asList(DataFieldType.values()).stream().map(dft -> new DataFieldPayload(dft.getClasse(), "", "", dft.getDisplayCode(), translator.getMessage(dft.getDisplayLabel(), null) , dft.isRequired(), dft.isRepeatable(), dft, ( dft.getSubFields().stream().map(v -> new TagFieldTypePayload(v.getField(), v.getTag(), v.getTag().getDisplayCode(), translator.getMessage(v.getDisplayLabel(),null), v.getRepeatable(), "") ).collect(Collectors.toList()) ) , dft.getSubFields() ) ).collect(Collectors.toList());
+		
+		// On ajoute la liste des etiquettes personnalisees
+		customFields.forEach(cf -> {
+			data.add( new DataFieldPayload(Integer.valueOf(cf.getCode().substring(0,1)), "", "", cf.getCode(), cf.getDisplayLabel(), cf.getRequired(), cf.getRepeatable(), null, cf.getSubfields().stream().map(v -> new TagFieldTypePayload(v.getField().getCode(), v.getTag(), v.getTag().getDisplayCode(), translator.getMessage(v.getDisplayLabel(),null), v.getRepeatable(), "") ).collect(Collectors.toList()), cf.getSubfields().stream().map(c -> c.toDTO()).toList() ) );
+		});
+		
+		rec.getDataFields().forEach(df -> {
+			DataFieldPayload dfp = data.stream().filter(f -> f.getDisplayCode().equals(df.getTag()) ).findFirst().orElse( null );
+			if(dfp == null) data.add( new DataFieldPayload(Integer.valueOf(df.getTag().substring(0,1)), String.valueOf(df.getIndicator1()), String.valueOf(df.getIndicator2()), df.getTag(), "marc.df"+df.getTag()+".label.key", false, false, null, df.getSubfields().stream().map(sf -> new TagFieldTypePayload(df.getTag(), TagField.valueOf("$".concat(String.valueOf(sf.getCode()))), String.valueOf(sf.getCode()),"marc.tf"+df.getTag()+"."+sf.getCode()+".label.key",false, sf.getData())).toList(), new ArrayList<SubFieldDTO>()) );
+			else {
+				dfp.setIndicator1(String.valueOf(df.getIndicator1()));
+				dfp.setIndicator2(String.valueOf(df.getIndicator2()));
+				for(Subfield sf: df.getSubfields()) {
+					TagFieldTypePayload tagValue = dfp.getValues().stream().filter(c -> c.getCode().equals(String.valueOf(sf.getCode()))).findFirst().orElse(null);
+					if(tagValue != null && StringUtils.isEmpty(tagValue.getValue()) ) tagValue.setValue(sf.getData()); 
+					else {
+						dfp.getValues().add(new TagFieldTypePayload(df.getTag(), TagField.valueOf("$".concat(String.valueOf(sf.getCode()))), String.valueOf(sf.getCode()), translator.getMessage(tagValue != null ? tagValue.getDisplayLabel() : "marc.tf"+df.getTag()+"."+sf.getCode()+".label.key", null), tagValue != null ? tagValue.isRepeatable() : false, sf.getData()));
+					}
+				}
+			}
+		});
+		
+		return new MarcRecordPayload(LeaderPayload.getFromRecord(rec.getLeader()), fields, data);
+	}
+
+
+	public static ControlFieldPayload getControlFieldsFromRecord(ControlField cf, ResourceManagementService translator) {
+		ControlFieldType cft = ControlFieldType.valueOf(cf.getTag());
+		return new ControlFieldPayload(cft, cft.getClasse(), cft.getDisplayCode(), translator.getMessage(cft.getDisplayLabel(), null) , cft.isRequired(), cft.isRepeatable(), cft.isFixedLength(), cft.getLength(), cft.isValueStructured(), cf.getData());
+	}
 }

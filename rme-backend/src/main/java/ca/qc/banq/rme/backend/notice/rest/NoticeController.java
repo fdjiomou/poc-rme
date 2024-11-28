@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ca.qc.banq.rme.backend.notice.service.INoticeService;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticeDisplayPayload;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticePayload;
-import ca.qc.banq.rme.shared.marcfactory.data.TagFieldTypeData;
+import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -108,13 +108,13 @@ public class NoticeController {
 	
 	@PostMapping("/etiquette/sauvegarder")
 	@Operation(description = "Sauvegarder la liste des etiquettes personnalisees")
-	public void saveCustomEtiquettes(List<TagFieldTypeData> payload) throws Exception {
+	public void saveCustomEtiquettes(List<CustomDataField> payload) throws Exception {
 		business.saveCustomEtiquettes(payload);
 	}
 
 	@GetMapping("/etiquette/lister")
 	@Operation(description = "Lister les etiquettes personnalisees")
-	public List<TagFieldTypeData> getCustomEtiquettes() {
+	public List<CustomDataField> getCustomEtiquettes() {
 		return business.getCustomEtiquettes();
 	}
 

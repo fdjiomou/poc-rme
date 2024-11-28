@@ -9,16 +9,14 @@ import java.util.List;
 
 import org.marc4j.marc.Record;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-
 import ca.qc.banq.rme.backend.constants.DefaultValues;
 import ca.qc.banq.rme.backend.notice.helpers.NoticeUtils;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticeDisplayPayload;
 import ca.qc.banq.rme.backend.notice.valueobject.NoticePayload;
 import ca.qc.banq.rme.shared.datamodel.MonitoredData;
+import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
 import ca.qc.banq.rme.shared.marcfactory.data.MarcRecordStringData;
 import ca.qc.banq.rme.shared.marcfactory.helpers.MarcServiceHelper;
-import ca.qc.banq.rme.shared.marcrecord.payload.MarcRecordPayload;
 import ca.qc.banq.rme.shared.service.ResourceManagementService;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -88,9 +86,9 @@ public class Notice extends MonitoredData implements Serializable {
     	}
     }
     
-    public NoticePayload toDTO(ResourceManagementService translator) {
+    public NoticePayload toDTO(ResourceManagementService translator, List<CustomDataField> fields) {
     	Record rec = MarcServiceHelper.getMarcRecordFromStringData(contenu, DefaultValues.STRING_MARC_CONTENT_FORMAT);
-    	return new NoticePayload(id, identifiant, titre, MarcRecordPayload.getFromRecord(rec, translator));
+    	return new NoticePayload(id, identifiant, titre, MarcServiceHelper.getFromRecord(rec, translator, fields));
     }
 
     public NoticeDisplayPayload toLibelle(List<NoticeDisplayConfig> cfg) {
