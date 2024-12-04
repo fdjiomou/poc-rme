@@ -3,6 +3,9 @@
  */
 package ca.qc.banq.rme.backend.notice.service.impl;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +27,8 @@ import ca.qc.banq.rme.backend.notice.valueobject.NoticePayload;
 import ca.qc.banq.rme.shared.marcfactory.data.CustomDataField;
 import ca.qc.banq.rme.shared.marcfactory.data.CustomSubField;
 import ca.qc.banq.rme.shared.marcfactory.data.MarcRecordStringData;
+import ca.qc.banq.rme.shared.marcfactory.data.SubFieldDTO;
+import ca.qc.banq.rme.shared.marcfactory.enums.DataFieldType;
 import ca.qc.banq.rme.shared.marcfactory.helpers.MarcServiceHelper;
 import ca.qc.banq.rme.shared.marcfactory.helpers.MarcServiceHelper.marc_string_representation_format;
 import ca.qc.banq.rme.shared.repository.ICustomDataFieldRepository;
@@ -144,6 +149,7 @@ public class NoticeServiceImpl implements INoticeService {
 			}
 			
 		}
+		//afficherLibelles();
 	}
 	
 	/*private void rafraichirCustomEtiquettes() {
@@ -187,6 +193,20 @@ public class NoticeServiceImpl implements INoticeService {
 		cdfRepo.deleteById(id);
 	}
 	
+	private void afficherLibelles() {
+		
+		try {
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("test.txt"));
+		
+		for (DataFieldType dft: DataFieldType.values() ) {
+			for(SubFieldDTO sf :  dft.getSubFields()) {
+				bos.write( new String( sf.getDisplayLabel().concat("=").concat( sf.getDisplayCode().equals("2") ? "Source" : (sf.getDisplayCode().equals("6") ? "Linkage" : sf.getDisplayLabel()) ).concat("\n")  ).getBytes() );
+			}
+		}
+		bos.close();
+		} catch(Exception r) {}
+		
+	}
 	
 	
 }

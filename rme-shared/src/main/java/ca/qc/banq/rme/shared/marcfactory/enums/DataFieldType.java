@@ -237,21 +237,6 @@ public enum DataFieldType {
 	$785( 7, "788", "marc.df.785.label.key", false, false, Arrays.asList( new SubFieldDTO[] {} ) ),
 	$786( 7, "786", "marc.df.786.label.key", false, false, Arrays.asList( new SubFieldDTO[] {} ) ),
 	$787( 7, "787", "marc.df.787.label.key", false, false, Arrays.asList( new SubFieldDTO[] {} ) ),
-	/*760 - Main Series Entry (R)  Full | Concise
-	762 - Subseries Entry (R)  Full | Concise
-	765 - Original Language Entry (R)  Full | Concise
-	767 - Translation Entry (R)  Full | Concise
-	770 - Supplement/Special Issue Entry (R)  Full | Concise
-	772 - Supplement Parent Entry (R)  Full | Concise
-	773 - Host Item Entry (R)  Full | Concise
-	774 - Constituent Unit Entry (R)  Full | Concise
-	775 - Other Edition Entry (R)  Full | Concise
-	776 - Additional Physical Form Entry (R)  Full | Concise
-	777 - Issued With Entry (R)  Full | Concise
-	780 - Preceding Entry (R)  Full | Concise
-	785 - Succeeding Entry (R)  Full | Concise
-	786 - Data Source Entry (R)  Full | Concise
-	787 - Other Relationship Entry (R)  Full | Concise*/
 	$788( 7, "788", "marc.df.788.label.key", false, true, Arrays.asList( new SubFieldDTO[] {} ) ), // 788 - Parallel Description in Another Language of Cataloging (R)  Full | Concise
 	
 	$800( 8, "800", "marc.df.800.label.key", false, true, Arrays.asList( new SubFieldDTO[] {} ) ), // 800 - Series Added Entry - Personal Name (R) Full | Concise
@@ -2087,7 +2072,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$600_t", DataFieldType.$600.getDisplayCode(), TagField.$t, "t", "marc.tf600.t.label.key", false ),
 				new SubFieldDTO("$600_u", DataFieldType.$600.getDisplayCode(), TagField.$u, "u", "marc.tf600.u.label.key", false ),
 				new SubFieldDTO("$600_v", DataFieldType.$600.getDisplayCode(), TagField.$v, "v", "marc.tf600.v.label.key", true ),
-				new SubFieldDTO("$600_w", DataFieldType.$600.getDisplayCode(), TagField.$w, "w", "marc.tf600.w.label.key", true ),
+				//new SubFieldDTO("$600_w", DataFieldType.$600.getDisplayCode(), TagField.$w, "w", "marc.tf600.w.label.key", true ),
 				new SubFieldDTO("$600_x", DataFieldType.$600.getDisplayCode(), TagField.$x, "x", "marc.tf600.x.label.key", true ),
 				new SubFieldDTO("$600_y", DataFieldType.$600.getDisplayCode(), TagField.$y, "y", "marc.tf600.y.label.key", true ),
 				new SubFieldDTO("$600_z", DataFieldType.$600.getDisplayCode(), TagField.$z, "z", "marc.tf600.z.label.key", true ),
@@ -2108,7 +2093,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$610_f", DataFieldType.$610.getDisplayCode(), TagField.$f, "f", "marc.tf610.f.label.key", true ),
 				new SubFieldDTO("$610_g", DataFieldType.$610.getDisplayCode(), TagField.$g, "g", "marc.tf610.g.label.key", true ),
 				new SubFieldDTO("$610_h", DataFieldType.$610.getDisplayCode(), TagField.$h, "h", "marc.tf610.h.label.key", false ),
-				new SubFieldDTO("$610_j", DataFieldType.$610.getDisplayCode(), TagField.$j, "j", "marc.tf610.j.label.key", true ),
+				//new SubFieldDTO("$610_j", DataFieldType.$610.getDisplayCode(), TagField.$j, "j", "marc.tf610.j.label.key", true ),
 				new SubFieldDTO("$610_k", DataFieldType.$610.getDisplayCode(), TagField.$k, "k", "marc.tf610.k.label.key", true ),
 				new SubFieldDTO("$610_l", DataFieldType.$610.getDisplayCode(), TagField.$l, "l", "marc.tf610.l.label.key", false ),
 				new SubFieldDTO("$610_m", DataFieldType.$610.getDisplayCode(), TagField.$m, "m", "marc.tf610.m.label.key", true ),
@@ -2149,6 +2134,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$611_t", DataFieldType.$611.getDisplayCode(), TagField.$t, "t", "marc.tf611.t.label.key", false ),
 				new SubFieldDTO("$611_u", DataFieldType.$611.getDisplayCode(), TagField.$u, "u", "marc.tf611.u.label.key", false ),
 				new SubFieldDTO("$611_v", DataFieldType.$611.getDisplayCode(), TagField.$v, "v", "marc.tf611.v.label.key", true ),
+				new SubFieldDTO("$611_x", DataFieldType.$611.getDisplayCode(), TagField.$x, "x", "marc.tf611.x.label.key", true ),
 				new SubFieldDTO("$611_y", DataFieldType.$611.getDisplayCode(), TagField.$y, "y", "marc.tf611.y.label.key", true ),
 				new SubFieldDTO("$611_z", DataFieldType.$611.getDisplayCode(), TagField.$z, "z", "marc.tf611.z.label.key", true ),
 				new SubFieldDTO("$611_0", DataFieldType.$611.getDisplayCode(), TagField.$0, "0", "marc.tf611.0.label.key", true ),
@@ -2270,6 +2256,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$654_v", DataFieldType.$654.getDisplayCode(), TagField.$v, "v", "marc.tf654.v.label.key", true ),
 				new SubFieldDTO("$654_y", DataFieldType.$654.getDisplayCode(), TagField.$y, "y", "marc.tf654.y.label.key", true ),
 				new SubFieldDTO("$654_z", DataFieldType.$654.getDisplayCode(), TagField.$z, "z", "marc.tf654.z.label.key", true ),
+				new SubFieldDTO("$654_0", DataFieldType.$654.getDisplayCode(), TagField.$0, "0", "marc.tf654.0.label.key", true ),
 				new SubFieldDTO("$654_1", DataFieldType.$654.getDisplayCode(), TagField.$1, "1", "marc.tf654.1.label.key", true ),
 				new SubFieldDTO("$654_2", DataFieldType.$654.getDisplayCode(), TagField.$2, "2", "marc.tf654.2.label.key", false ),
 				new SubFieldDTO("$654_3", DataFieldType.$654.getDisplayCode(), TagField.$3, "3", "marc.tf654.3.label.key", false ),
@@ -2411,7 +2398,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$710_n", DataFieldType.$710.getDisplayCode(), TagField.$n, "n", "marc.tf710.n.label.key", true ),
 				new SubFieldDTO("$710_o", DataFieldType.$710.getDisplayCode(), TagField.$o, "o", "marc.tf710.o.label.key", false ),
 				new SubFieldDTO("$710_p", DataFieldType.$710.getDisplayCode(), TagField.$p, "p", "marc.tf710.p.label.key", true ),
-				new SubFieldDTO("$710_q", DataFieldType.$710.getDisplayCode(), TagField.$q, "q", "marc.tf710.q.label.key", true ),
+				//new SubFieldDTO("$710_q", DataFieldType.$710.getDisplayCode(), TagField.$q, "q", "marc.tf710.q.label.key", true ),
 				new SubFieldDTO("$710_r", DataFieldType.$710.getDisplayCode(), TagField.$r, "r", "marc.tf710.r.label.key", false ),
 				new SubFieldDTO("$710_s", DataFieldType.$710.getDisplayCode(), TagField.$s, "s", "marc.tf710.s.label.key", true ),
 				new SubFieldDTO("$710_t", DataFieldType.$710.getDisplayCode(), TagField.$t, "t", "marc.tf710.t.label.key", false ),
@@ -2731,7 +2718,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$774_g", DataFieldType.$774.getDisplayCode(), TagField.$g, "g", "marc.tf774.g.label.key", true ),
 				new SubFieldDTO("$774_h", DataFieldType.$774.getDisplayCode(), TagField.$h, "h", "marc.tf774.h.label.key", false ),
 				new SubFieldDTO("$774_i", DataFieldType.$774.getDisplayCode(), TagField.$i, "i", "marc.tf774.i.label.key", true ),
-				new SubFieldDTO("$774_j", DataFieldType.$774.getDisplayCode(), TagField.$j, "j", "marc.tf774.j.label.key", true ),
+				//new SubFieldDTO("$774_j", DataFieldType.$774.getDisplayCode(), TagField.$j, "j", "marc.tf774.j.label.key", true ),
 				new SubFieldDTO("$774_k", DataFieldType.$774.getDisplayCode(), TagField.$k, "k", "marc.tf774.k.label.key", true ),
 				new SubFieldDTO("$774_l", DataFieldType.$774.getDisplayCode(), TagField.$l, "l", "marc.tf774.l.label.key", true ),
 				new SubFieldDTO("$774_m", DataFieldType.$774.getDisplayCode(), TagField.$m, "m", "marc.tf774.m.label.key", false ),
@@ -2760,7 +2747,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$775_g", DataFieldType.$775.getDisplayCode(), TagField.$g, "g", "marc.tf775.g.label.key", true ),
 				new SubFieldDTO("$775_h", DataFieldType.$775.getDisplayCode(), TagField.$h, "h", "marc.tf775.h.label.key", false ),
 				new SubFieldDTO("$775_i", DataFieldType.$775.getDisplayCode(), TagField.$i, "i", "marc.tf775.i.label.key", true ),
-				new SubFieldDTO("$775_j", DataFieldType.$775.getDisplayCode(), TagField.$j, "j", "marc.tf775.j.label.key", true ),
+				//new SubFieldDTO("$775_j", DataFieldType.$775.getDisplayCode(), TagField.$j, "j", "marc.tf775.j.label.key", true ),
 				new SubFieldDTO("$775_k", DataFieldType.$775.getDisplayCode(), TagField.$k, "k", "marc.tf775.k.label.key", true ),
 				new SubFieldDTO("$775_l", DataFieldType.$775.getDisplayCode(), TagField.$l, "l", "marc.tf775.l.label.key", true ),
 				new SubFieldDTO("$775_m", DataFieldType.$775.getDisplayCode(), TagField.$m, "m", "marc.tf775.m.label.key", false ),
@@ -2786,7 +2773,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$776_g", DataFieldType.$776.getDisplayCode(), TagField.$g, "g", "marc.tf776.g.label.key", true ),
 				new SubFieldDTO("$776_h", DataFieldType.$776.getDisplayCode(), TagField.$h, "h", "marc.tf776.h.label.key", false ),
 				new SubFieldDTO("$776_i", DataFieldType.$776.getDisplayCode(), TagField.$i, "i", "marc.tf776.i.label.key", true ),
-				new SubFieldDTO("$776_j", DataFieldType.$776.getDisplayCode(), TagField.$j, "j", "marc.tf776.j.label.key", true ),
+				//new SubFieldDTO("$776_j", DataFieldType.$776.getDisplayCode(), TagField.$j, "j", "marc.tf776.j.label.key", true ),
 				new SubFieldDTO("$776_k", DataFieldType.$776.getDisplayCode(), TagField.$k, "k", "marc.tf776.k.label.key", true ),
 				new SubFieldDTO("$776_l", DataFieldType.$776.getDisplayCode(), TagField.$l, "l", "marc.tf776.l.label.key", true ),
 				new SubFieldDTO("$776_m", DataFieldType.$776.getDisplayCode(), TagField.$m, "m", "marc.tf776.m.label.key", false ),
@@ -2812,7 +2799,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$777_g", DataFieldType.$777.getDisplayCode(), TagField.$g, "g", "marc.tf777.g.label.key", true ),
 				new SubFieldDTO("$777_h", DataFieldType.$777.getDisplayCode(), TagField.$h, "h", "marc.tf777.h.label.key", false ),
 				new SubFieldDTO("$777_i", DataFieldType.$777.getDisplayCode(), TagField.$i, "i", "marc.tf777.i.label.key", true ),
-				new SubFieldDTO("$777_j", DataFieldType.$777.getDisplayCode(), TagField.$j, "j", "marc.tf777.j.label.key", true ),
+				//new SubFieldDTO("$777_j", DataFieldType.$777.getDisplayCode(), TagField.$j, "j", "marc.tf777.j.label.key", true ),
 				new SubFieldDTO("$777_k", DataFieldType.$777.getDisplayCode(), TagField.$k, "k", "marc.tf777.k.label.key", true ),
 				new SubFieldDTO("$777_l", DataFieldType.$777.getDisplayCode(), TagField.$l, "l", "marc.tf777.l.label.key", true ),
 				new SubFieldDTO("$777_m", DataFieldType.$777.getDisplayCode(), TagField.$m, "m", "marc.tf777.m.label.key", false ),
@@ -2838,7 +2825,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$780_g", DataFieldType.$780.getDisplayCode(), TagField.$g, "g", "marc.tf780.g.label.key", true ),
 				new SubFieldDTO("$780_h", DataFieldType.$780.getDisplayCode(), TagField.$h, "h", "marc.tf780.h.label.key", false ),
 				new SubFieldDTO("$780_i", DataFieldType.$780.getDisplayCode(), TagField.$i, "i", "marc.tf780.i.label.key", true ),
-				new SubFieldDTO("$780_j", DataFieldType.$780.getDisplayCode(), TagField.$j, "j", "marc.tf780.j.label.key", true ),
+				//new SubFieldDTO("$780_j", DataFieldType.$780.getDisplayCode(), TagField.$j, "j", "marc.tf780.j.label.key", true ),
 				new SubFieldDTO("$780_k", DataFieldType.$780.getDisplayCode(), TagField.$k, "k", "marc.tf780.k.label.key", true ),
 				new SubFieldDTO("$780_l", DataFieldType.$780.getDisplayCode(), TagField.$l, "l", "marc.tf780.l.label.key", true ),
 				new SubFieldDTO("$780_m", DataFieldType.$780.getDisplayCode(), TagField.$m, "m", "marc.tf780.m.label.key", false ),
@@ -2864,7 +2851,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$785_g", DataFieldType.$785.getDisplayCode(), TagField.$g, "g", "marc.tf785.g.label.key", true ),
 				new SubFieldDTO("$785_h", DataFieldType.$785.getDisplayCode(), TagField.$h, "h", "marc.tf785.h.label.key", false ),
 				new SubFieldDTO("$785_i", DataFieldType.$785.getDisplayCode(), TagField.$i, "i", "marc.tf785.i.label.key", true ),
-				new SubFieldDTO("$785_j", DataFieldType.$785.getDisplayCode(), TagField.$j, "j", "marc.tf785.j.label.key", true ),
+				//new SubFieldDTO("$785_j", DataFieldType.$785.getDisplayCode(), TagField.$j, "j", "marc.tf785.j.label.key", true ),
 				new SubFieldDTO("$785_k", DataFieldType.$785.getDisplayCode(), TagField.$k, "k", "marc.tf785.k.label.key", true ),
 				new SubFieldDTO("$785_l", DataFieldType.$785.getDisplayCode(), TagField.$l, "l", "marc.tf785.l.label.key", true ),
 				new SubFieldDTO("$785_m", DataFieldType.$785.getDisplayCode(), TagField.$m, "m", "marc.tf785.m.label.key", false ),
@@ -2901,6 +2888,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$786_s", DataFieldType.$786.getDisplayCode(), TagField.$s, "s", "marc.tf786.s.label.key", false ),
 				new SubFieldDTO("$786_t", DataFieldType.$786.getDisplayCode(), TagField.$t, "t", "marc.tf786.t.label.key", false ),
 				new SubFieldDTO("$786_u", DataFieldType.$786.getDisplayCode(), TagField.$u, "u", "marc.tf786.u.label.key", false ),
+				new SubFieldDTO("$786_v", DataFieldType.$786.getDisplayCode(), TagField.$v, "v", "marc.tf786.v.label.key", false ),
 				new SubFieldDTO("$786_w", DataFieldType.$786.getDisplayCode(), TagField.$w, "w", "marc.tf786.w.label.key", true ),
 				new SubFieldDTO("$786_x", DataFieldType.$786.getDisplayCode(), TagField.$x, "x", "marc.tf786.x.label.key", false ),
 				new SubFieldDTO("$786_y", DataFieldType.$786.getDisplayCode(), TagField.$y, "y", "marc.tf786.y.label.key", false ),
@@ -2917,7 +2905,7 @@ public enum DataFieldType {
 				new SubFieldDTO("$787_g", DataFieldType.$787.getDisplayCode(), TagField.$g, "g", "marc.tf787.g.label.key", true ),
 				new SubFieldDTO("$787_h", DataFieldType.$787.getDisplayCode(), TagField.$h, "h", "marc.tf787.h.label.key", false ),
 				new SubFieldDTO("$787_i", DataFieldType.$787.getDisplayCode(), TagField.$i, "i", "marc.tf787.i.label.key", true ),
-				new SubFieldDTO("$787_j", DataFieldType.$787.getDisplayCode(), TagField.$j, "j", "marc.tf787.j.label.key", true ),
+				//new SubFieldDTO("$787_j", DataFieldType.$787.getDisplayCode(), TagField.$j, "j", "marc.tf787.j.label.key", true ),
 				new SubFieldDTO("$787_k", DataFieldType.$787.getDisplayCode(), TagField.$k, "k", "marc.tf787.k.label.key", true ),
 				new SubFieldDTO("$787_l", DataFieldType.$787.getDisplayCode(), TagField.$l, "l", "marc.tf787.l.label.key", true ),
 				new SubFieldDTO("$787_m", DataFieldType.$787.getDisplayCode(), TagField.$m, "m", "marc.tf787.m.label.key", false ),
@@ -3018,10 +3006,11 @@ public enum DataFieldType {
 				new SubFieldDTO("$810_6", DataFieldType.$810.getDisplayCode(), TagField.$6, "6", "marc.tf810.6.label.key", false ),
 				new SubFieldDTO("$810_7", DataFieldType.$810.getDisplayCode(), TagField.$7, "7", "marc.tf810.7.label.key", false ),
 				new SubFieldDTO("$810_8", DataFieldType.$810.getDisplayCode(), TagField.$8, "8", "marc.tf810.8.label.key", true ),
-				new SubFieldDTO("$810_9", DataFieldType.$810.getDisplayCode(), TagField.$9, "9", "marc.tf810.9.label.key", true ),} );
+				//new SubFieldDTO("$810_9", DataFieldType.$810.getDisplayCode(), TagField.$9, "9", "marc.tf810.9.label.key", true ),
+				} );
 		
 		case $811: return Arrays.asList( new SubFieldDTO[] {new SubFieldDTO("$811_a", DataFieldType.$811.getDisplayCode(), TagField.$a, "a", "marc.tf811.a.label.key", false ),
-				new SubFieldDTO("$811_b", DataFieldType.$811.getDisplayCode(), TagField.$b, "b", "marc.tf811.b.label.key", true ),
+				//new SubFieldDTO("$811_b", DataFieldType.$811.getDisplayCode(), TagField.$b, "b", "marc.tf811.b.label.key", true ),
 				new SubFieldDTO("$811_c", DataFieldType.$811.getDisplayCode(), TagField.$c, "c", "marc.tf811.c.label.key", true ),
 				new SubFieldDTO("$811_d", DataFieldType.$811.getDisplayCode(), TagField.$d, "d", "marc.tf811.d.label.key", true ),
 				new SubFieldDTO("$811_e", DataFieldType.$811.getDisplayCode(), TagField.$e, "e", "marc.tf811.e.label.key", true ),
@@ -3031,10 +3020,10 @@ public enum DataFieldType {
 				new SubFieldDTO("$811_j", DataFieldType.$811.getDisplayCode(), TagField.$j, "j", "marc.tf811.j.label.key", true ),
 				new SubFieldDTO("$811_k", DataFieldType.$811.getDisplayCode(), TagField.$k, "k", "marc.tf811.k.label.key", true ),
 				new SubFieldDTO("$811_l", DataFieldType.$811.getDisplayCode(), TagField.$l, "l", "marc.tf811.l.label.key", false ),
-				new SubFieldDTO("$811_m", DataFieldType.$811.getDisplayCode(), TagField.$m, "m", "marc.tf811.m.label.key", true ),
+				//new SubFieldDTO("$811_m", DataFieldType.$811.getDisplayCode(), TagField.$m, "m", "marc.tf811.m.label.key", true ),
 				new SubFieldDTO("$811_p", DataFieldType.$811.getDisplayCode(), TagField.$p, "p", "marc.tf811.p.label.key", true ),
 				new SubFieldDTO("$811_q", DataFieldType.$811.getDisplayCode(), TagField.$q, "q", "marc.tf811.q.label.key", false ),
-				new SubFieldDTO("$811_r", DataFieldType.$811.getDisplayCode(), TagField.$r, "r", "marc.tf811.r.label.key", true ),
+				new SubFieldDTO("$811_n", DataFieldType.$811.getDisplayCode(), TagField.$n, "n", "marc.tf811.n.label.key", true ),
 				new SubFieldDTO("$811_s", DataFieldType.$811.getDisplayCode(), TagField.$s, "s", "marc.tf811.s.label.key", true ),
 				new SubFieldDTO("$811_t", DataFieldType.$811.getDisplayCode(), TagField.$t, "t", "marc.tf811.t.label.key", false ),
 				new SubFieldDTO("$811_u", DataFieldType.$811.getDisplayCode(), TagField.$u, "u", "marc.tf811.u.label.key", false ),
